@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --bg: 5 5 7; --fg: 245 245 247; --accent: 139 124 255; --glow1: 91 75 255; --glow2: 0 179 255; color-scheme: dark; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { @apply bg-bg text-fg font-sans antialiased; min-height: 100dvh; overflow-x: hidden; }
+::selection { background: rgb(var(--accent) / 0.35); }
+.glass { @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl; }
+.eyebrow { @apply text-xs font-medium uppercase tracking-[0.22em] text-fg/50; }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70; }
+.is-admin [data-editable] { outline: 1px dashed rgb(var(--accent) / 0.45); outline-offset: 4px; border-radius: 4px; cursor: text; }
+.is-admin [data-editable]:focus { outline: 2px solid rgb(var(--accent)); background: rgb(var(--accent) / 0.08); }
+.admin-input { @apply w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-fg placeholder:text-fg/30 focus:border-accent/60 focus:outline-none; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
