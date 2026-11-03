@@ -3,7 +3,7 @@ import { useAdminMode } from '../hooks/useAdminMode'
 import { useSiteConfig } from '../hooks/useSiteConfig'
 
 export default function AdminBar() {
-  const { isAdmin, setAdmin, panelOpen, setPanelOpen } = useAdminMode()
+  const { isAdmin, logout, panelOpen, setPanelOpen } = useAdminMode()
   const { saveError, hasLocalChanges } = useSiteConfig()
 
   return (
@@ -19,7 +19,7 @@ export default function AdminBar() {
           </div>
           <div className="flex shrink-0 gap-2">
             <button type="button" onClick={() => setPanelOpen(!panelOpen)} className="rounded-full bg-accent px-3 py-1 font-medium text-bg">{panelOpen ? 'Panel schließen' : 'Panel öffnen'}</button>
-            <button type="button" onClick={() => setAdmin(false)} className="rounded-full border border-white/15 px-3 py-1 text-fg/80 hover:bg-white/5">Beenden</button>
+            <button type="button" onClick={() => logout()} className="rounded-full border border-white/15 px-3 py-1 text-fg/80 hover:bg-white/5">Beenden</button>
           </div>
         </motion.div>
       )}

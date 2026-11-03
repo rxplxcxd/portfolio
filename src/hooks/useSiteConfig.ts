@@ -3,7 +3,7 @@ import { defaults, emptyProject, emptyTool } from '../data/defaults'
 import { deepMerge, hexToRgb } from '../lib/utils'
 import type { SiteConfig } from '../types'
 
-export const STORAGE_KEY = 'portfolio:content:v1'
+export const STORAGE_KEY = 'portfolio:content:v2'
 
 function normalize(raw: unknown): SiteConfig {
   const merged = deepMerge(defaults, raw)

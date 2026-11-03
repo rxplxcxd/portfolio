@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { MotionConfig } from 'framer-motion'
 import { useSiteConfig } from './hooks/useSiteConfig'
 import { useAdminMode } from './hooks/useAdminMode'
@@ -10,11 +11,24 @@ import WorkGrid from './components/WorkGrid'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import AdminLogin from './components/AdminLogin'
+import LegalPage, { type LegalKind } from './components/LegalPage'
+
+const routeFromHash = (): LegalKind | null => {
+  const h = window.location.hash
+  return h === '#/impressum' ? 'impressum' : h === '#/datenschutz' ? 'datenschutz' : null
+}
 
 export default function App() {
   const { config, ready } = useSiteConfig()
   const { isAdmin } = useAdminMode()
   const { animations: a, sections } = config
+  const [legalPage, setLegalPage] = useState<LegalKind | null>(routeFromHash)
+  useEffect(() => {
+    const onHash = () => setLegalPage(routeFromHash())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
 
   return (
     <MotionConfig reducedMotion="user" transition={{ type: 'spring', stiffness: a.springStiffness, damping: a.springDamping }}>
@@ -29,13 +43,20 @@ export default function App() {
       <AdminBar />
       <Nav />
       <main className={cn('transition-opacity duration-500', ready ? 'opacity-100' : 'opacity-0', isAdmin && 'pt-10')}>
-        <Hero />
-        {sections.work && <WorkGrid />}
-        {(sections.about || sections.tools) && <About />}
-        {sections.contact && <Contact />}
+        {legalPage ? (
+          <LegalPage kind={legalPage} />
+        ) : (
+          <>
+            <Hero />
+            {sections.work && <WorkGrid />}
+            {(sections.about || sections.tools) && <About />}
+            {sections.contact && <Contact />}
+          </>
+        )}
       </main>
       <Footer />
       <AdminPanel />
+      <AdminLogin />
     </MotionConfig>
   )
 }

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSiteConfig } from '../hooks/useSiteConfig'
 import { useAdminMode } from '../hooks/useAdminMode'
-import { cn, scrollToId } from '../lib/utils'
+import { cn, goHome, scrollToId } from '../lib/utils'
 import Editable from './ui/Editable'
 
 export default function Nav() {
   const { config, patch } = useSiteConfig()
-  const { isAdmin, toggleAdmin } = useAdminMode()
+  const { isAdmin } = useAdminMode()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { nav, sections, meta } = config
@@ -28,6 +28,12 @@ export default function Nav() {
   const go = (id: string) => {
     if (isAdmin) return
     setOpen(false)
+    if (window.location.hash.startsWith('#/')) {
+      history.pushState(null, '', window.location.pathname + window.location.search)
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+      window.setTimeout(() => scrollToId(id), 80)
+      return
+    }
     scrollToId(id)
   }
 
@@ -35,14 +41,7 @@ export default function Nav() {
     <header className={cn('fixed inset-x-0 z-40 px-4 transition-[top] duration-300', isAdmin ? 'top-12' : 'top-4')}>
       <nav className={cn('mx-auto flex max-w-site items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-5', scrolled ? 'glass shadow-2xl shadow-black/40' : 'border border-transparent')}>
         <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={toggleAdmin}
-            aria-label={isAdmin ? 'Admin-Modus beenden' : 'Admin-Modus aktivieren'}
-            title="Admin-Modus (Alt+Shift+A)"
-            className={cn('h-2 w-2 rounded-full transition-all hover:scale-150', isAdmin ? 'bg-accent shadow-[0_0_12px_rgb(var(--accent))]' : 'bg-fg/25 hover:bg-fg/60')}
-          />
-          <a href="#top" onClick={(e) => { e.preventDefault(); if (!isAdmin) window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="text-sm font-semibold tracking-tight">
+          <a href="./" onClick={(e) => { e.preventDefault(); if (!isAdmin) goHome() }} className="text-sm font-semibold tracking-tight">
             <Editable value={meta.brand} onCommit={(brand) => patch('meta', { brand })} />
           </a>
         </div>

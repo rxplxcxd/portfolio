@@ -64,3 +64,10 @@ export function fileToDataUrl(file: File, maxSize = 1600, quality = 0.82): Promi
     reader.readAsDataURL(file)
   })
 }
+
+// Zurück zur Startseite (aus Impressum/Datenschutz oder nach oben scrollen).
+export function goHome() {
+  if (window.location.hash) history.pushState(null, '', window.location.pathname + window.location.search)
+  window.dispatchEvent(new HashChangeEvent('hashchange'))
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}

@@ -1,6 +1,20 @@
 import type { Project, SiteConfig, Tool } from '../types'
 
-const img = (seed: string, w = 1600, h = 1000) => `https://picsum.photos/seed/${seed}/${w}/${h}`
+// ───────────────────────── EIGENE MEDIEN ─────────────────────────
+// Lege deine Dateien in  public/media/  ab und trage sie hier ein (Pfad mit führendem Schrägstrich).
+//   thumb:  Vorschaubild der Karte, z. B. '/media/showreel.jpg'
+//   video:  YouTube-/Vimeo-Link ODER '/media/showreel.mp4'
+//   images: Galerie-Bilder (nur bei Bild-Projekten)
+// Leer gelassen zeigt die Karte einen farbigen Verlauf – es werden keine Fremdbilder geladen.
+interface Media { thumb: string; video: string; images: string[] }
+const MEDIA: Record<string, Media> = {
+  'showreel-2026': { thumb: '', video: '', images: [] },
+  'aurora-produktvideo': { thumb: '', video: '', images: [] },
+  'kornblume-logo': { thumb: '', video: '', images: [] },
+  'stadt-im-nebel': { thumb: '', video: '', images: [] },
+  'sv-kampagne': { thumb: '', video: '', images: [] },
+  'portraet-serie': { thumb: '', video: '', images: [] },
+}
 
 export const emptyProject: Project = {
   id: '',
@@ -21,6 +35,7 @@ export const emptyProject: Project = {
 
 export const emptyTool: Tool = { id: '', name: 'Neues Tool', short: 'NT', category: 'Software', level: 60, years: '1 Jahr', color: '#8b7cff' }
 
+// Social-Links: echte Profil-URL eintragen (z. B. 'https://www.instagram.com/deinname/'). Leere Einträge werden im Footer ausgeblendet.
 export const defaults: SiteConfig = {
   meta: {
     documentTitle: 'Leon Schubert – Mediengestalter Digital',
@@ -71,7 +86,7 @@ export const defaults: SiteConfig = {
     allLabel: 'Alle',
     categories: ['Video & Schnitt', 'Bildbearbeitung', 'Digital Design'],
     emptyText: 'In dieser Kategorie gibt es noch keine Projekte.',
-    labels: { role: 'Rolle', year: 'Jahr', client: 'Auftrag', close: 'Schließen', play: 'Video abspielen', noVideo: 'Noch kein Video hinterlegt.', open: 'Ansehen' },
+    labels: { role: 'Rolle', year: 'Jahr', client: 'Auftrag', close: 'Schließen', play: 'Video abspielen', noVideo: 'Video folgt in Kürze.', open: 'Ansehen' },
     projects: [
       {
         id: 'showreel-2026',
@@ -84,11 +99,11 @@ export const defaults: SiteConfig = {
         description:
           'Mein aktuelles Showreel vereint Ausschnitte aus Schulprojekten, Praktikum und freien Arbeiten. Der Schnitt folgt konsequent dem Beat, das Grading wurde in DaVinci Resolve für einen einheitlichen, filmischen Look abgestimmt.',
         tags: ['Premiere Pro', 'DaVinci Resolve', 'Sounddesign'],
-        thumbnail: img('ls-showreel', 1200, 800),
+        thumbnail: MEDIA['showreel-2026'].thumb,
         accent: '#8b7cff',
         mediaType: 'video',
-        videoUrl: '',
-        images: [],
+        videoUrl: MEDIA['showreel-2026'].video,
+        images: MEDIA['showreel-2026'].images,
       },
       {
         id: 'aurora-produktvideo',
@@ -101,11 +116,11 @@ export const defaults: SiteConfig = {
         description:
           'Für einen fiktiven Kopfhörer-Launch entstand ein 30-sekündiger Spot. Mit Slider, Makroobjektiv und zwei Lichtquellen habe ich Materialität und Details herausgearbeitet; der Schnitt setzt auf ruhige Übergänge und präzise Typografie.',
         tags: ['Produktfilm', 'Lichtsetzung', 'After Effects'],
-        thumbnail: img('ls-aurora', 1200, 800),
+        thumbnail: MEDIA['aurora-produktvideo'].thumb,
         accent: '#00b3ff',
         mediaType: 'video',
-        videoUrl: '',
-        images: [],
+        videoUrl: MEDIA['aurora-produktvideo'].video,
+        images: MEDIA['aurora-produktvideo'].images,
       },
       {
         id: 'kornblume-logo',
@@ -118,11 +133,11 @@ export const defaults: SiteConfig = {
         description:
           'Ausgehend vom bestehenden Logo habe ich ein kurzes Intro für Social Media und Screens entwickelt. Shape Layers, Easing-Kurven und ein dezenter Sound-Akzent geben der Marke eine freundliche Persönlichkeit.',
         tags: ['After Effects', 'Illustrator', 'Branding'],
-        thumbnail: img('ls-kornblume', 1200, 800),
+        thumbnail: MEDIA['kornblume-logo'].thumb,
         accent: '#ff7ab6',
         mediaType: 'video',
-        videoUrl: '',
-        images: [],
+        videoUrl: MEDIA['kornblume-logo'].video,
+        images: MEDIA['kornblume-logo'].images,
       },
       {
         id: 'stadt-im-nebel',
@@ -135,11 +150,11 @@ export const defaults: SiteConfig = {
         description:
           'Aus mehreren Aufnahmen meiner Heimatstadt entstand ein atmosphärisches Composing. Masken, Frequenztrennung und Color Lookup sorgen für ein stimmiges Gesamtbild; die Nebelebenen wurden von Hand gemalt.',
         tags: ['Photoshop', 'Composing', 'Lightroom'],
-        thumbnail: img('ls-nebel', 1200, 800),
+        thumbnail: MEDIA['stadt-im-nebel'].thumb,
         accent: '#7dd3c0',
         mediaType: 'gallery',
-        videoUrl: '',
-        images: [img('ls-nebel-1'), img('ls-nebel-2'), img('ls-nebel-3')],
+        videoUrl: MEDIA['stadt-im-nebel'].video,
+        images: MEDIA['stadt-im-nebel'].images,
       },
       {
         id: 'sv-kampagne',
@@ -152,11 +167,11 @@ export const defaults: SiteConfig = {
         description:
           'Für den Instagram-Auftritt meines Sportvereins habe ich ein flexibles Designsystem in Figma entwickelt. Der Verein kann Posts und Stories nun selbst in wenigen Minuten erstellen – mit klarer Typografie und Vereinsfarben.',
         tags: ['Figma', 'Social Media', 'Designsystem'],
-        thumbnail: img('ls-sv', 1200, 800),
+        thumbnail: MEDIA['sv-kampagne'].thumb,
         accent: '#ffb347',
         mediaType: 'gallery',
-        videoUrl: '',
-        images: [img('ls-sv-1'), img('ls-sv-2'), img('ls-sv-3')],
+        videoUrl: MEDIA['sv-kampagne'].video,
+        images: MEDIA['sv-kampagne'].images,
       },
       {
         id: 'portraet-serie',
@@ -169,11 +184,11 @@ export const defaults: SiteConfig = {
         description:
           'Eine Serie von Porträts im Available Light. In Lightroom entstand ein einheitlicher Look, in Photoshop folgten Dodge & Burn und eine behutsame Retusche, die Charakter bewahrt statt ihn zu glätten.',
         tags: ['Lightroom', 'Photoshop', 'Fotografie'],
-        thumbnail: img('ls-portrait', 1200, 800),
+        thumbnail: MEDIA['portraet-serie'].thumb,
         accent: '#c4a7ff',
         mediaType: 'gallery',
-        videoUrl: '',
-        images: [img('ls-portrait-1'), img('ls-portrait-2'), img('ls-portrait-3')],
+        videoUrl: MEDIA['portraet-serie'].video,
+        images: MEDIA['portraet-serie'].images,
       },
     ],
   },
@@ -217,14 +232,14 @@ export const defaults: SiteConfig = {
   footer: {
     copyright: '© {year} Leon Schubert',
     impressumLabel: 'Impressum',
-    impressumUrl: '#impressum',
+    impressumUrl: '#/impressum',
     privacyLabel: 'Datenschutz',
-    privacyUrl: '#datenschutz',
+    privacyUrl: '#/datenschutz',
     note: 'Gestaltet & entwickelt von Leon Schubert.',
   },
   socials: [
-    { id: 'instagram', label: 'Instagram', url: 'https://instagram.com/' },
-    { id: 'behance', label: 'Behance', url: 'https://behance.net/' },
-    { id: 'linkedin', label: 'LinkedIn', url: 'https://linkedin.com/' },
+    { id: 'instagram', label: 'Instagram', url: '' },
+    { id: 'behance', label: 'Behance', url: '' },
+    { id: 'linkedin', label: 'LinkedIn', url: '' },
   ],
 }

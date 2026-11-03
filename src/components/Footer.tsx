@@ -13,7 +13,7 @@ export default function Footer() {
           <Editable value={footer.note} onCommit={(note) => patch('footer', { note })} as="p" className="text-xs text-fg/35" />
         </div>
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
-          {socials.map((s) => (
+          {socials.filter((s) => /^https?:\/\/[^/]+\/.+/.test(s.url.trim())).map((s) => (
             <li key={s.id}>
               <a href={s.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-fg">{s.label}</a>
             </li>
